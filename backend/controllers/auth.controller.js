@@ -1,12 +1,10 @@
 const userService = require("../services/user.service");
-// Asegúrate de copiar la carpeta 'utils' de tu proyecto de clases a este nuevo
 const { generateToken } = require("../utils/jwt.utils"); 
 const { sha1Encode } = require("../utils/text.utils"); 
 
 exports.postRegister = async (req, res) => {
     const { nombre, email, password } = req.body;
 
-    // TODO: Aquí irá tu validación con Joi o Zod según el PDF
 
     const existingUser = await userService.findUserByEmail(email);
     if (existingUser) {
