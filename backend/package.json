@@ -4,9 +4,9 @@
   "description": "Backend del practico 2 de Web II",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "Samir Toledo & Daniel Morales",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^2.2.2",
