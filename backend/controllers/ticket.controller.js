@@ -1,14 +1,10 @@
 const ticketService = require("../services/ticket.service");
 const userService = require("../services/user.service");
-// IMPORTANTE: Importamos el modelo Proyecto para la Regla 2
 const { proyecto } = require("../models");
 
 const crearTicket = async (req, res) => {
   try {
     const { titulo, descripcion, proyectoId, usuarioAsignadoId } = req.body;
-
-    // Nota: Como ya tienes Joi configurado, esta validación manual aquí
-    // es un poco redundante, pero no hace daño dejarla por doble seguridad.
     if (!titulo || !descripcion || !proyectoId) {
       return res.status(400).json({
         message: "El título, descripción y proyectoId son obligatorios",
@@ -64,15 +60,11 @@ const actualizarTicket = async (req, res) => {
     const { id } = req.params;
     const datosActualizados = req.body;
 
-    // 1. Buscamos el ticket actual para saber su estado antes de modificarlo
     const ticketActual = await ticketService.obtenerTicketPorId(id);
     if (!ticketActual) {
       return res.status(404).json({ message: "Ticket no encontrado" });
     }
 
-    // ==========================================
-    // REGLA DE NEGOCIO 1: SALTOS DE ESTADO PROHIBIDOS
-    // ==========================================
     if (
       datosActualizados.estado &&
       datosActualizados.estado !== ticketActual.estado
@@ -88,12 +80,8 @@ const actualizarTicket = async (req, res) => {
       }
     }
 
-    // Guardamos temporalmente quién es el responsable (el que ya estaba, o el nuevo)
     let usuarioAsignadoFinalId = ticketActual.usuarioAsignadoId;
 
-    // ==========================================
-    // REGLA DE NEGOCIO 2: USUARIO DEBE PERTENECER AL PROYECTO
-    // ==========================================
     if (datosActualizados.emailAsignado) {
       const usuario = await userService.findUserByEmail(
         datosActualizados.emailAsignado,
@@ -105,12 +93,8 @@ const actualizarTicket = async (req, res) => {
         });
       }
 
-      // --- AQUÍ ESTÁ EL CAMBIO ---
-      // Usamos 'proyecto' (en minúscula) porque así lo exportaste en models/index.js
-      // Y guardamos el resultado en 'proyectoBD'
       const proyectoBD = await proyecto.findByPk(ticketActual.proyectoId);
 
-      // Verificamos si el proyecto tiene a este usuario asignado
       const perteneceAlProyecto = await proyectoBD.hasUsuario(usuario);
 
       if (!perteneceAlProyecto) {
@@ -125,9 +109,6 @@ const actualizarTicket = async (req, res) => {
       delete datosActualizados.emailAsignado;
     }
 
-    // ==========================================
-    // REGLA DE NEGOCIO 3: NO INICIAR SIN RESPONSABLE
-    // ==========================================
     const estadoFinal = datosActualizados.estado || ticketActual.estado;
     if (estadoFinal === "En Progreso" && !usuarioAsignadoFinalId) {
       return res.status(400).json({
@@ -136,7 +117,6 @@ const actualizarTicket = async (req, res) => {
       });
     }
 
-    // Si pasó todas las pruebas, actualizamos en la BD
     const ticketActualizado = await ticketService.actualizarTicket(
       id,
       datosActualizados,

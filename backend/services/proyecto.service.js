@@ -1,7 +1,6 @@
 const db = require("../models");
 
 const proyectoService = {
-  // 1. Crear
   crearProyecto: async (nombre, descripcion, usuarioId) => {
     const nuevoProyecto = await db.proyecto.create({
       nombre,
@@ -11,7 +10,6 @@ const proyectoService = {
     return nuevoProyecto;
   },
 
-  // 2. Listar
   obtenerProyectosDeUsuario: async (usuarioId) => {
     return await db.proyecto.findAll({
       include: [
@@ -24,7 +22,6 @@ const proyectoService = {
     });
   },
 
-  // 3. Ver Detalle
   obtenerProyectoPorId: async (id) => {
     return await db.proyecto.findByPk(id, {
       include: [
@@ -36,7 +33,6 @@ const proyectoService = {
     });
   },
 
-  // 4. Editar
   actualizarProyecto: async (id, nombre, descripcion) => {
     const proyecto = await db.proyecto.findByPk(id);
     if (proyecto) {
@@ -48,5 +44,4 @@ const proyectoService = {
   },
 };
 
-// No olvides esta línea vital al final
 module.exports = proyectoService;
