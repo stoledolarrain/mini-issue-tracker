@@ -1,10 +1,8 @@
 const proyectoService = require("../services/proyecto.service");
 
-// 1. Crear Proyecto
 exports.postCrearProyecto = async (req, res) => {
   try {
     const { nombre, descripcion } = req.body;
-    // Sacamos el ID del usuario que hizo la petición (viene del token)
     const usuarioId = req.user.id;
 
     const nuevoProyecto = await proyectoService.crearProyecto(
@@ -25,7 +23,6 @@ exports.postCrearProyecto = async (req, res) => {
   }
 };
 
-// 2. Listar Proyectos
 exports.getProyectos = async (req, res) => {
   try {
     const usuarioId = req.user.id;
@@ -39,7 +36,6 @@ exports.getProyectos = async (req, res) => {
   }
 };
 
-// 3. Ver detalle de un proyecto
 exports.getProyectoById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +52,6 @@ exports.getProyectoById = async (req, res) => {
   }
 };
 
-// 4. Actualizar Proyecto
 exports.putActualizarProyecto = async (req, res) => {
   try {
     const { id } = req.params;

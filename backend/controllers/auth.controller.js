@@ -13,7 +13,6 @@ exports.postRegister = async (req, res) => {
 
     const encodedPassword = sha1Encode(password);
     
-    // Creamos el usuario directamente (ya no necesitamos personaService)
     await userService.createUser(nombre, email, encodedPassword);
     
     res.status(201).json({ message: "Usuario registrado exitosamente" });

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const ticketController = require("../controllers/ticket.controller");
-// Importamos tu guardia de seguridad (¡Porque solo usuarios logueados pueden ver tickets!)
 const requireAuth = require("../middlewares/auth.middleware");
 
 const {
@@ -12,27 +11,21 @@ const schemaValidation = require("../middlewares/schemaValidation.middleware");
 const {
   isJsonRequestValid,
 } = require("../middlewares/isJsonRequestValid.middleware");
-
 router.use(requireAuth);
-
 router.post(
   "/",
   isJsonRequestValid,
   schemaValidation(crearTicketSchema),
   ticketController.crearTicket,
 );
-
 router.get("/proyecto/:proyectoId", ticketController.getTicketsPorProyecto);
-
 router.get("/:id", ticketController.getTicket);
-
 router.put(
   "/:id",
   isJsonRequestValid,
   schemaValidation(actualizarTicketSchema),
   ticketController.actualizarTicket,
 );
-
 router.get("/tablero/:proyectoId", ticketController.getTablero);
 
 module.exports = router;
