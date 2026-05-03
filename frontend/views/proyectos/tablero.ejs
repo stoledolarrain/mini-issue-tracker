@@ -1,0 +1,47 @@
+<div class="container-fluid mt-4">
+    <h2 class="mb-4">Tablero: <%= proyecto.nombre %></h2>
+    
+    <div class="row">
+        <!-- Columna Pendiente -->
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-header bg-secondary text-white">Pendiente</div>
+                <div class="card-body">
+                    <% tickets.filter(t => t.estado === 'Pendiente').forEach(ticket => { %>
+                        <div class="card mb-2 shadow-sm">
+                            <div class="card-body">
+                                <h6><%= ticket.titulo %></h6>
+                                <p class="small text-muted"><%= ticket.descripcion %></p>
+                                <span class="badge bg-info text-dark">👤 <%= ticket.asignadoA ? ticket.asignadoA.nombre : 'Sin asignar' %></span>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna En Progreso -->
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-header bg-primary text-white">En Progreso</div>
+                <div class="card-body">
+                    <% tickets.filter(t => t.estado === 'En Progreso').forEach(ticket => { %>
+                        <!-- Misma estructura de card que arriba -->
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Completado -->
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-header bg-success text-white">Completado</div>
+                <div class="card-body">
+                    <% tickets.filter(t => t.estado === 'Completado').forEach(ticket => { %>
+                        <!-- Misma estructura de card que arriba -->
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
