@@ -28,7 +28,6 @@
                                 <label class="form-label fw-bold">Asignar a:</label>
                                 <select name="usuarioAsignadoId" class="form-select">
                                     <option value="">Sin asignar</option>
-                                    <!-- Aquí llenaremos los usuarios desde la base de datos -->
                                     <% usuarios.forEach(user => { %>
                                         <option value="<%= user.id %>"><%= user.nombre %> (<%= user.email %>)</option>
                                     <% }) %>

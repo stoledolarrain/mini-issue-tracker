@@ -7,11 +7,9 @@
 </head>
 <body class="bg-light">
 
-    <!-- Navbar simple -->
     <nav class="navbar navbar-dark bg-dark mb-4">
         <div class="container">
             <span class="navbar-brand mb-0 h1">Gestor de Tickets</span>
-            <!-- Un botón para cerrar sesión (luego haremos la ruta) -->
             <a href="/logout" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
         </div>
     </nav>
@@ -19,12 +17,10 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Mis Proyectos</h2>
-    <!-- Ahora es un enlace que se ve como botón -->
     <a href="/proyectos/crear" class="btn btn-success">Nuevo Proyecto</a>
 </div>
 
         <div class="row">
-            <!-- Empezamos el ciclo de EJS -->
             <% if (proyectos && proyectos.length > 0) { %>
                 <% proyectos.forEach(proyecto => { %>
                     <div class="col-md-4 mb-4">
@@ -34,7 +30,6 @@
                                 <p class="card-text text-muted"><%= proyecto.descripcion %></p>
                             </div>
                             <div class="card-footer bg-transparent border-top-0">
-                                <!-- Este botón luego nos llevará a ver los tickets del proyecto -->
                                 <a href="/proyectos/<%= proyecto.id %>/tablero" class="btn btn-primary w-100">Ver Tablero</a>
                             </div>
                         </div>

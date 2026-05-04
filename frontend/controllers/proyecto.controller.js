@@ -1,6 +1,5 @@
 const axios = require("axios");
 
-// 0. Obtener todos los proyectos (¡La que se había borrado!)
 exports.getProyectos = async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -19,12 +18,10 @@ exports.getProyectos = async (req, res) => {
   }
 };
 
-// 1. Mostrar la vista del formulario
 exports.getCrearProyecto = (req, res) => {
-  res.render("proyectos/crear");
+  res.render("proyectos/crear", { error: null, datos: {} });
 };
 
-// 2. Enviar los datos a la API del Backend
 exports.postCrearProyecto = async (req, res) => {
   try {
     const { nombre, descripcion } = req.body;
@@ -38,9 +35,17 @@ exports.postCrearProyecto = async (req, res) => {
 
     res.redirect("/proyectos");
   } catch (error) {
-    console.error("Error al crear el proyecto:", error.message);
+    const mensajeError =
+      error.response && error.response.data && error.response.data.message
+        ? error.response.data.message
+        : "No se pudo crear el proyecto. Verifica los campos.";
+
+    console.error("Error al crear el proyecto:", mensajeError);
+
+    // Volvemos a renderizar la vista pasándole el error y lo que el usuario ya había escrito
     res.render("proyectos/crear", {
-      error: "No se pudo crear el proyecto. Inténtalo de nuevo.",
+      error: mensajeError,
+      datos: req.body, // Aquí viajan el nombre y descripción que intentó guardar
     });
   }
 };
