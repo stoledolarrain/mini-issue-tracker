@@ -9,5 +9,7 @@ router.get("/", (req, res) => res.redirect("/login"));
 // Lógica de Axios
 router.post("/login", authController.postLogin);
 router.get("/logout", authController.getLogout); // Ahora sí encontrará la función
+router.get("/register", authController.getRegister);
+router.post("/register", authController.postRegister);
 
 module.exports = router;

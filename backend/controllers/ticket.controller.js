@@ -151,6 +151,22 @@ const getTablero = async (req, res) => {
       .json({ message: "Error al generar el tablero", error: error.message });
   }
 };
+const eliminarTicket = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const eliminado = await ticketService.eliminarTicket(id);
+
+    if (!eliminado) {
+      return res.status(404).json({ message: "Ticket no encontrado" });
+    }
+
+    res.status(200).json({ message: "Ticket eliminado correctamente" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error al eliminar el ticket", error: error.message });
+  }
+};
 
 module.exports = {
   crearTicket,
@@ -158,4 +174,5 @@ module.exports = {
   getTicket,
   actualizarTicket,
   getTablero,
+  eliminarTicket,
 };

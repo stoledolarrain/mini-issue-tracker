@@ -11,7 +11,9 @@ const schemaValidation = require("../middlewares/schemaValidation.middleware");
 const {
   isJsonRequestValid,
 } = require("../middlewares/isJsonRequestValid.middleware");
+
 router.use(requireAuth);
+
 router.post(
   "/",
   isJsonRequestValid,
@@ -27,5 +29,8 @@ router.put(
   ticketController.actualizarTicket,
 );
 router.get("/tablero/:proyectoId", ticketController.getTablero);
+
+// --- RUTA PARA ELIMINAR ---
+router.delete("/:id", ticketController.eliminarTicket);
 
 module.exports = router;
