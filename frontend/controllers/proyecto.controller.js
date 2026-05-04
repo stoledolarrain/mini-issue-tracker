@@ -42,10 +42,9 @@ exports.postCrearProyecto = async (req, res) => {
 
     console.error("Error al crear el proyecto:", mensajeError);
 
-    // Volvemos a renderizar la vista pasándole el error y lo que el usuario ya había escrito
     res.render("proyectos/crear", {
       error: mensajeError,
-      datos: req.body, // Aquí viajan el nombre y descripción que intentó guardar
+      datos: req.body,
     });
   }
 };
