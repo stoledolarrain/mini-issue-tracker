@@ -11,7 +11,6 @@ const proyectoService = {
   },
 
   obtenerProyectosDeUsuario: async (usuarioId) => {
-    // 1. Proyectos donde el usuario es creador / miembro (Tu consulta original)
     const proyectosComoMiembro = await db.proyecto.findAll({
       include: [
         {
@@ -22,19 +21,16 @@ const proyectoService = {
       ],
     });
 
-    // 2. Proyectos donde el usuario tiene tickets asignados
-    // Buscamos proyectos que incluyan al menos un ticket con el ID de este usuario
     const proyectosPorTickets = await db.proyecto.findAll({
       include: [
         {
           model: db.ticket,
           where: { usuarioAsignadoId: usuarioId },
-          attributes: [], // No necesitamos los detalles del ticket aquí, solo filtrar el proyecto
+          attributes: [],
         },
       ],
     });
 
-    // 3. Unimos ambas listas y eliminamos los proyectos duplicados
     const proyectosUnicos = [];
     const idsVistos = new Set();
 

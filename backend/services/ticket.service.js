@@ -43,11 +43,10 @@ const ticketService = {
     return null;
   },
 
-  // --- NUEVA FUNCIÓN PARA ELIMINAR ---
   eliminarTicket: async (id) => {
     const ticket = await db.ticket.findByPk(id);
     if (ticket) {
-      await ticket.destroy(); // Elimina físicamente el registro[cite: 14]
+      await ticket.destroy();
       return true;
     }
     return false;

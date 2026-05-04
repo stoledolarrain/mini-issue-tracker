@@ -30,7 +30,6 @@ router.put(
 );
 router.get("/tablero/:proyectoId", ticketController.getTablero);
 
-// --- RUTA PARA ELIMINAR ---
 router.delete("/:id", ticketController.eliminarTicket);
 
 module.exports = router;
